@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://cp0wj7rmoqgn3"]
+[gd_scene load_steps=23 format=3 uid="uid://cp0wj7rmoqgn3"]
 
 [ext_resource type="Script" path="res://scenes/player/player2.gd" id="1_gyirf"]
 [ext_resource type="Texture2D" uid="uid://b0hbvo101mklh" path="res://assets/player/_Idle.png" id="2_gf4kr"]
@@ -11,9 +11,6 @@
 [ext_resource type="Script" path="res://scenes/player/states/Running.gd" id="9_rufb3"]
 [ext_resource type="Script" path="res://scenes/player/states/Jump.gd" id="10_bngjr"]
 [ext_resource type="Script" path="res://scenes/player/states/Fall.gd" id="11_2kocs"]
-[ext_resource type="Script" path="res://scenes/player/states/Attack.gd" id="12_ht5g3"]
-[ext_resource type="Script" path="res://scenes/player/states/Crunch.gd" id="13_14q7u"]
-[ext_resource type="Script" path="res://scenes/player/states/Attack2.gd" id="14_4syiu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvdrn"]
 size = Vector2(21, 37.5)
@@ -414,8 +411,6 @@ func input(event: InputEvent) -> State:
 	var direction = Input.get_axis(\"ui_left\", \"ui_right\")
 	if direction:
 		return running_state
-	elif Input.is_action_just_pressed('ui_accept') and player.is_on_floor():
-		return jump_state
 	else:
 		return null
 
@@ -475,13 +470,3 @@ script = ExtResource("11_2kocs")
 idle_node = NodePath("../Idle")
 jump_node = NodePath("../Jump")
 running_node = NodePath(".")
-animation_name = "fall"
-
-[node name="Attack" type="Node" parent="StateManager"]
-script = ExtResource("12_ht5g3")
-
-[node name="Crunch" type="Node" parent="StateManager"]
-script = ExtResource("13_14q7u")
-
-[node name="Attack2" type="Node" parent="StateManager"]
-script = ExtResource("14_4syiu")

@@ -1,3 +1,4 @@
+class_name StateManager
 extends Node
 
 
