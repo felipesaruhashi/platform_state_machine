@@ -1,13 +1,16 @@
 class_name StateManager
 extends Node
 
-
 @export var starting_state: NodePath
 
 var current_state: State
+var previous_state: State
 
 func change_state(new_state: State) -> void:
+	
+	print(new_state.animation_name)
 	if current_state:
+		previous_state = current_state
 		current_state.exit()
 
 	current_state = new_state
@@ -19,6 +22,7 @@ func change_state(new_state: State) -> void:
 func init(player: Player) -> void:
 	for child in get_children():
 		child.player = player
+		child.stateManager = self
 
 	# Initialize with a default state of idle
 	change_state(get_node(starting_state))

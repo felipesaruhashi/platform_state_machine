@@ -25,7 +25,6 @@ func _physics_process(delta) -> void:
 func _unhandled_input(event) -> void:
 	var direction = Input.get_axis("ui_left", "ui_right")
 
-	print(direction)
 	if direction > 0:
 		sprite.scale.x = 1
 	elif direction < 0:

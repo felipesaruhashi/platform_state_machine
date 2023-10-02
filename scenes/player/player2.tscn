@@ -397,20 +397,22 @@ size = Vector2(41, 35)
 
 [sub_resource type="GDScript" id="GDScript_ilw64"]
 script/source = "extends State
+# Idle
 
 @export var running_node: NodePath
 @export var jump_node: NodePath
 @export var falling_node: NodePath
+@export var attack_node: NodePath
 
 @onready var running_state = get_node(running_node)
 @onready var jump_state = get_node(jump_node)
+@onready var attack_state = get_node(attack_node)
 
 func enter() -> void:
 	super()
 	player.velocity.x = 0
 
 func input(event: InputEvent) -> State:
-	
 	var direction = Input.get_axis(\"ui_left\", \"ui_right\")
 	if direction:
 		return running_state
@@ -418,6 +420,11 @@ func input(event: InputEvent) -> State:
 		return jump_state
 	else:
 		return null
+
+func physics_process(delta: float) -> State:
+	if Input.is_action_just_pressed(\"attack\"):
+		return attack_state
+	return null
 
 "
 
@@ -454,13 +461,13 @@ script = SubResource("GDScript_ilw64")
 running_node = NodePath("../Running")
 jump_node = NodePath("../Jump")
 falling_node = NodePath("../Fall")
+attack_node = NodePath("../Attack")
 animation_name = "idle"
 
 [node name="Running" type="Node" parent="StateManager"]
 script = ExtResource("9_rufb3")
 idle_node = NodePath("../Idle")
 jump_node = NodePath("../Jump")
-falling_node = NodePath("../Fall")
 animation_name = "run"
 
 [node name="Jump" type="Node" parent="StateManager"]
@@ -468,17 +475,19 @@ script = ExtResource("10_bngjr")
 idle_node = NodePath("../Idle")
 running_node = NodePath("../Running")
 falling_node = NodePath("../Fall")
+attack_node = NodePath("../Attack")
 animation_name = "jump"
 
 [node name="Fall" type="Node" parent="StateManager"]
 script = ExtResource("11_2kocs")
 idle_node = NodePath("../Idle")
 jump_node = NodePath("../Jump")
-running_node = NodePath(".")
+running_node = NodePath("../Running")
 animation_name = "fall"
 
 [node name="Attack" type="Node" parent="StateManager"]
 script = ExtResource("12_ht5g3")
+animation_name = "attack"
 
 [node name="Crunch" type="Node" parent="StateManager"]
 script = ExtResource("13_14q7u")
