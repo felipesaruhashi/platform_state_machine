@@ -18,7 +18,7 @@ func physics_process(delta: float) -> State:
 	if Input.is_action_pressed('attack'):
 		return crouch_attack_state
 	
-	if Input.is_action_just_released('ui_down'):
+	if not Input.is_action_pressed('ui_down'):
 		return idle_state
 	
 	if Input.is_action_pressed('ui_down') and (Input.is_action_pressed('ui_left') or Input.is_action_pressed('ui_right')):
